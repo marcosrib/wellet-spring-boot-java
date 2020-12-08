@@ -28,6 +28,11 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<Response<User>> create(@Valid @RequestBody UserDTO dto,  BindingResult result) {
 		Response<User> response = new Response<User>();
+		
+		if(result.hasErrors()) {
+			result.getAllErrors().forEach(e -> response.getErrors().add(e.getDefaultMessage()));
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+		}
 		User user = service.save(this.convertDtoToEntity(dto));
 		response.setData(user);
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);

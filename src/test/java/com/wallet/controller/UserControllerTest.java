@@ -2,7 +2,10 @@ package com.wallet.controller;
 
 
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import javax.validation.constraints.Email;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -44,14 +47,27 @@ public class UserControllerTest {
     	BDDMockito.given(service.save(Mockito.any(User.class))).willReturn(getMockUser());
 		mvc.perform(MockMvcRequestBuilders
 				.post(URL)
-				.content(getJsonPayload())
+				.content(getJsonPayload(EMAIL, NAME, PASSWORD))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
-		.andExpect(status().isCreated());
+		.andExpect(status().isCreated())
+		.andExpect(jsonPath("$.data.name").value(NAME))
+		.andExpect(jsonPath("$.data.email").value(EMAIL))
+		.andExpect(jsonPath("$.data.password").value(PASSWORD));
 				
-		
 	}
 
+    @Test
+    public void testSavaInvalidUSer() throws Exception {
+    	BDDMockito.given(service.save(Mockito.any(User.class))).willReturn(getMockUser());
+		mvc.perform(MockMvcRequestBuilders
+				.post(URL)
+				.content(getJsonPayload("email", NAME, PASSWORD))
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+		.andExpect(status().isBadRequest())
+		.andExpect(jsonPath("$.errors[0]").value("email invalido"));
+    }
 	public User getMockUser() {
 		User user = new User();
 		user.setEmail(EMAIL);
@@ -60,11 +76,11 @@ public class UserControllerTest {
 		return user;
 	}
 
-	public String getJsonPayload() throws JsonProcessingException {
+	public String getJsonPayload(String email, String name, String password) throws JsonProcessingException {
 		UserDTO dto = new UserDTO();
-		dto.setEmail(EMAIL);
-		dto.setName(NAME);
-		dto.setPassword(PASSWORD);
+		dto.setEmail(email);
+		dto.setName(name);
+		dto.setPassword(password);
 
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(dto);
