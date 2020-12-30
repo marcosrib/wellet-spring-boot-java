@@ -19,7 +19,7 @@ import com.wallet.response.Response;
 import com.wallet.service.UserWalletService;
 
 @RestController
-@RequestMapping("user-wallet")
+@RequestMapping(path = "user-wallet")
 public class UserWalletController {
 	@Autowired
 	private UserWalletService service;
