@@ -1,1 +1,1 @@
-web: java -jar -DskipTests -Dspring.profile.active=prod -Dserver.port=$PORT target/wallet-0.0.1-SNAPSHOT.jar
+web: java -jar  -Dspring.profile.active=prod -Dserver.port=$PORT target/wallet-0.0.1-SNAPSHOT.jar

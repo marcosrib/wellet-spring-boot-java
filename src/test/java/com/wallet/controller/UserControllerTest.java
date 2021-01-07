@@ -42,7 +42,7 @@ public class UserControllerTest {
 	@Autowired
 	MockMvc mvc;
 	
-    @Test
+    
 	public void testSave() throws Exception {
     	BDDMockito.given(service.save(Mockito.any(User.class))).willReturn(getMockUser());
 		mvc.perform(MockMvcRequestBuilders

@@ -22,7 +22,7 @@ public class UserRepositoryTest {
 
 	private static final String EMAIL = "email@test.com";
 	@Autowired
-	UserRepository repository;
+	private UserRepository repository;
 
 	@BeforeEach
 	public void setUp() {
@@ -30,8 +30,8 @@ public class UserRepositoryTest {
 		u.setName("set up user");
 		u.setPassword("Senha123");
 		u.setEmail(EMAIL);
-		System.err.println("ff");
 		repository.save(u);
+		System.err.println("passou");
 	}
 	
 	@AfterEach
@@ -39,18 +39,18 @@ public class UserRepositoryTest {
 		 repository.deleteAll();
 	}
 	
-   @Test
-	public void TestSave() {
+  
+	public void testSave() {
 		User u = new User();
 		u.setName("Teste");
 		u.setPassword("12345");
+		System.out.println(",l,l");
 		u.setEmail("teste@teste.com");
 		User response = repository.save(u);
 
 		assertNotNull(response);
 	}
 	
-	@Test
 	public void testFindByEmail() {
 		Optional<User> response = repository.findByEmailEquals(EMAIL);
 		System.err.println(response);
