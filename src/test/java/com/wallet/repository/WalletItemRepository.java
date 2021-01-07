@@ -1,8 +1,8 @@
 package com.wallet.repository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -28,8 +28,9 @@ import com.wallet.entity.Wallet;
 import com.wallet.entity.WalletItem;
 import com.wallet.enums.TypeEnum;
 
-@RunWith(SpringRunner.class)
+
 @SpringBootTest
+@RunWith(SpringRunner.class)
 public class WalletItemRepository {
 
 	private static final Date DATE = new Date();
